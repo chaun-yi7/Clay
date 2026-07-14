@@ -1,0 +1,13 @@
+# Typora 本地历史 / 备份(不进仓库)
+*.bak
+*.bak[0-9]
+*.bak[0-9][0-9]
+
+# 操作系统杂项
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 编辑器
+.vscode/
+.idea/

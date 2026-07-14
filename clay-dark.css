@@ -1,0 +1,1155 @@
+/* Clay Dark — Typora Theme (Dark) · inspired by the claude.ai design language */
+
+:root {
+    /* Color Palette — claude.ai dark: warm gray (hue 60, ~2% sat) + Clay */
+    --side-bar-bg-color: #171716;
+    --control-text-color: #97958c;
+    --text-color: #d5d4cb;
+    --bg-color: #1f1f1e;
+    --window-bg-color: #262625;
+    --select-text-bg-color: #57392f;
+    --search-select-bg-color: #8f5440;
+    --search-select-text-color: #f8f8f6;
+    --item-hover-bg-color: rgba(217, 119, 87, 0.10);
+    --active-file-bg-color: rgba(217, 119, 87, 0.14);
+    --active-file-border-color: #d97757;
+    --active-file-text-color: #d97757;
+
+    /* Code Palette */
+    --code-bg-color: #171716;
+    --code-text-color: #deddd7;
+    --code-border-color: #333331;
+    --border-color: #3a3a38;
+    /* Clay clears 4.5:1 on the dark bg, so it serves both decorative and text roles */
+    --accent-color: #d97757;
+    --accent-text-color: #d97757;
+    --heading-color: #f8f8f6;
+
+    /* Blockquote & Table */
+    --quote-bg-color: #262625;
+    --quote-text-color: #c3c2b7;
+    --table-border-strong-color: #4a4a47;
+    --table-row-border-color: rgba(248, 248, 246, 0.12);
+    --table-alt-color: #242423;
+    --table-hover-color: rgba(217, 119, 87, 0.07);
+
+    /* Syntax Highlighting */
+    --code-muted-color: #97958c;
+    --code-keyword-color: #b899ff;
+    --code-string-color: #81cb82;
+    --code-number-color: #d9a56f;
+    --code-symbol-color: #89b1ea;
+    --inline-code-color: #e1a092;
+    --inline-code-bg-color: #2c2c2a;
+    --inline-code-border-color: #3f3f3c;
+
+    /* UI */
+    --rawblock-edit-panel-bd: #3a3a38;
+    --primary-color: #d97757;
+    --window-border: 1px solid #3a3a38;
+    --blur-text-color: #97958c;
+
+    /* Typography */
+    --font-heading: "Anthropic Serif", "Söhne Serif", ui-serif, Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+    --font-body: "Anthropic Sans", "Inter", "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-ui: "Anthropic Sans", "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-mono: "Anthropic Mono", "Fira Code", "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+}
+
+html {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    background-color: var(--bg-color);
+}
+
+body {
+    font-family: var(--font-body);
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
+    font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* Layout */
+#write {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 40px 40px 120px;
+}
+
+@media only screen and (min-width: 1400px) {
+    #write {
+        max-width: 880px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    #write {
+        padding: 24px 20px 84px;
+    }
+}
+
+/* Selection */
+::selection {
+    background-color: var(--select-text-bg-color);
+    color: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    position: relative;
+    font-family: var(--font-heading);
+    color: var(--heading-color);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 0.8em;
+}
+
+h1 tt, h1 code,
+h2 tt, h2 code,
+h3 tt, h3 code,
+h4 tt, h4 code,
+h5 tt, h5 code,
+h6 tt, h6 code {
+    font-size: inherit;
+}
+
+h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.4em;
+}
+
+h2 {
+    font-size: 1.7em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid rgba(217, 119, 87, 0.28);
+    border-bottom: 1px solid color-mix(in srgb, var(--accent-color) 28%, transparent);
+}
+
+h3 {
+    font-size: 1.4em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 1.1em;
+}
+
+h6 {
+    font-size: 1em;
+    color: var(--control-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2.2em;
+}
+
+/* Links */
+a {
+    color: var(--accent-text-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s ease-in-out, border-bottom-color 0.2s ease-in-out;
+}
+
+a:hover {
+    border-bottom-color: var(--accent-text-color);
+    color: #e08862;
+}
+
+/* Basic Elements */
+p,
+ul,
+ol,
+dl,
+table,
+pre {
+    margin: 1.25em 0;
+}
+
+ul,
+ol {
+    padding-left: 2em;
+}
+
+li {
+    margin: 0.4em 0;
+}
+
+li>ol,
+li>ul {
+    margin: 0.2em 0;
+}
+
+#write ul > li::marker {
+    color: var(--accent-color);
+}
+
+#write ol > li::marker {
+    color: var(--accent-text-color);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 3em 0;
+    opacity: 0.8;
+}
+
+/* Blockquotes */
+blockquote {
+    border-left: 4px solid var(--accent-color);
+    background-color: var(--quote-bg-color);
+    padding: 1em 1.5em;
+    color: var(--quote-text-color);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    margin: 1.5em 0;
+}
+
+blockquote p {
+    margin: 0.5em 0;
+}
+
+blockquote blockquote {
+    padding-right: 0;
+}
+
+/* Tables - Card Style */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+    margin: 2em 0;
+    background-color: var(--bg-color);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--table-border-strong-color);
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 14px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--table-row-border-color);
+}
+
+table th {
+    background-color: var(--table-alt-color);
+    font-weight: 600;
+    color: var(--heading-color);
+    border-bottom: 2px solid var(--table-border-strong-color);
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+table tr:hover td {
+    background-color: var(--table-hover-color);
+}
+
+/* Inline Code */
+code,
+tt {
+    font-family: var(--font-mono);
+    border: 1px solid var(--inline-code-border-color);
+    background-color: var(--inline-code-bg-color);
+    color: var(--inline-code-color);
+    border-radius: 4px;
+    padding: 0.1em 0.3em;
+    margin: 0 0.2em;
+    font-size: 0.88em;
+    font-weight: 600;
+    overflow-wrap: break-word;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+/* Highlight & Keyboard Keys */
+#write mark {
+    background: rgba(214, 183, 155, 0.25);
+    color: inherit;
+    border-radius: 3px;
+    padding: 0.05em 0.15em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+#write kbd {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--text-color);
+    background-color: var(--window-bg-color);
+    border: 1px solid var(--border-color);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0.1em 0.4em;
+    margin: 0 0.1em;
+}
+
+#write abbr {
+    border-bottom: 1px dotted var(--control-text-color);
+    text-decoration: none;
+    cursor: help;
+}
+
+/* Code Blocks & Fences */
+.md-fences {
+    font-family: var(--font-mono);
+    border: 1px solid var(--code-border-color);
+    background-color: var(--code-bg-color);
+    color: var(--code-text-color);
+    border-radius: 10px;
+    padding: 1em 1.2em;
+    font-size: 0.9em;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.02);
+    line-height: 1.6;
+    margin: 1.25em 0;
+}
+
+.md-fences pre,
+.md-fences code,
+.md-fences tt,
+.md-fences .CodeMirror,
+.md-fences .CodeMirror pre,
+.md-fences .cm-s-inner {
+    font-family: var(--font-mono) !important;
+    color: inherit !important;
+}
+
+.md-fences .cm-s-inner span {
+    font-family: var(--font-mono) !important;
+}
+
+.md-fences code,
+.md-fences tt {
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    font-weight: inherit !important;
+}
+
+.md-fences .CodeMirror,
+.md-fences .CodeMirror-scroll,
+.md-fences .CodeMirror-sizer,
+.md-fences .CodeMirror-gutters,
+.md-fences .CodeMirror-lines {
+    background-color: transparent !important;
+}
+
+/* CodeMirror Syntax Highlighting */
+.md-fences .CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color) !important;
+}
+
+.md-fences .cm-comment {
+    color: var(--code-muted-color) !important;
+    font-style: italic;
+}
+
+.md-fences .cm-meta {
+    color: var(--code-muted-color) !important;
+}
+
+.md-fences .cm-keyword,
+.md-fences .cm-builtin {
+    color: var(--code-keyword-color) !important;
+    font-weight: 500;
+}
+
+.md-fences .cm-def,
+.md-fences .cm-variable-2,
+.md-fences .cm-variable-3,
+.md-fences .cm-atom {
+    color: var(--code-keyword-color) !important;
+}
+
+.md-fences .cm-string,
+.md-fences .cm-string-2 {
+    color: var(--code-string-color) !important;
+}
+
+.md-fences .cm-number {
+    color: var(--code-number-color) !important;
+}
+
+.md-fences .cm-tag,
+.md-fences .cm-property,
+.md-fences .cm-attribute {
+    color: var(--code-symbol-color) !important;
+}
+
+.md-fences .cm-qualifier,
+.md-fences .cm-link {
+    color: var(--code-symbol-color) !important;
+}
+
+.md-fences .cm-operator,
+.md-fences .cm-variable,
+.md-fences .cm-bracket {
+    color: var(--code-text-color) !important;
+}
+
+/* Code Block Line Numbers (when enabled) */
+.md-fences .CodeMirror-gutters {
+    background: transparent;
+    border-right: 1px solid var(--code-border-color);
+}
+
+.md-fences .CodeMirror-linenumber {
+    color: var(--code-muted-color);
+}
+
+/* Source Code Mode (Ctrl+/) */
+#typora-source,
+#typora-source .cm-header,
+#typora-source .cm-code,
+#typora-source .cm-comment,
+#typora-source .cm-overlay,
+#typora-source .cm-block-start,
+#typora-source .cm-table-row {
+    font-family: var(--font-mono);
+}
+
+#typora-source .CodeMirror-lines {
+    max-width: 820px;
+    margin: 0 auto;
+}
+
+.cm-s-typora-default .cm-header,
+.cm-s-typora-default .cm-property {
+    color: var(--accent-text-color);
+}
+
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+    border-left: 2px solid var(--accent-color);
+}
+
+.cm-s-typora-default .cm-comment,
+.cm-s-typora-default .cm-code {
+    color: var(--code-muted-color);
+}
+
+.cm-s-typora-default .cm-string {
+    color: var(--code-string-color);
+}
+
+.cm-s-typora-default .cm-atom,
+.cm-s-typora-default .cm-number {
+    color: var(--code-number-color);
+}
+
+.cm-s-typora-default .cm-tag,
+.cm-s-typora-default .cm-link {
+    color: var(--code-symbol-color);
+}
+
+.cm-s-typora-default .CodeMirror-activeline-background {
+    background: rgba(248, 248, 246, 0.04);
+}
+
+/* Task Lists */
+#write .task-list-item,
+#write .md-task-list-item {
+    list-style-type: none !important;
+    padding-left: 0;
+    position: relative;
+}
+
+#write .task-list-item::marker,
+#write .md-task-list-item::marker {
+    content: "";
+}
+
+#write .task-list-item > p,
+#write .task-list-item > p.first,
+#write .md-task-list-item > p,
+#write .md-task-list-item > p.first {
+    display: block;
+}
+
+#write .task-list-item-checkbox,
+#write .md-task-list-item > input {
+    position: absolute;
+    top: 0.4em;
+    left: -1.4em;
+    margin: 0;
+    font-size: inherit;
+    width: 0.95em;
+    height: 0.95em;
+    accent-color: var(--accent-color);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#write .task-list-item-checkbox:hover,
+#write .md-task-list-item > input:hover {
+    transform: scale(1.08);
+}
+
+/* List Images */
+#write li > .md-image,
+#write li > p > .md-image,
+#write li > p:first-child > .md-image,
+#write li > img,
+#write li > p > img,
+#write li > p:first-child > img {
+    display: block;
+    margin: 0.55em 0 0.75em;
+    max-width: 100%;
+}
+
+#write li > .md-image,
+#write li > p > .md-image,
+#write li > p:first-child > .md-image {
+    text-align: left;
+}
+
+#write li > .md-image:first-child,
+#write li > p:first-child > .md-image:first-child,
+#write li > img:first-child,
+#write li > p:first-child > img:first-child {
+    margin-top: 0.2em;
+}
+
+#write li > .md-image:last-child,
+#write li > p:last-child > .md-image:last-child,
+#write li > img:last-child,
+#write li > p:last-child > img:last-child {
+    margin-bottom: 0.35em;
+}
+
+#write li > p:has(> .md-image),
+#write li > p:has(> img) {
+    margin-top: 0.15em;
+    margin-bottom: 0.15em;
+}
+
+#write .task-list-item > .md-image,
+#write .task-list-item > p > .md-image,
+#write .task-list-item > img,
+#write .task-list-item > p > img,
+#write .md-task-list-item > .md-image,
+#write .md-task-list-item > p > .md-image,
+#write .md-task-list-item > img,
+#write .md-task-list-item > p > img {
+    margin-left: 0;
+}
+
+/* MathJax */
+.md-mathjax-midline {
+    background: var(--window-bg-color);
+    border-radius: 4px;
+    padding: 2px 4px;
+}
+
+.mathjax-block>.code-tooltip {
+    bottom: 0.375rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+}
+
+/* UI Enhancements */
+#typora-sidebar {
+    background-color: var(--side-bar-bg-color);
+    border-right: 1px solid var(--border-color);
+}
+
+#typora-sidebar code,
+#typora-sidebar tt,
+.md-toc-content code,
+.md-toc-content tt {
+    background: transparent !important;
+    border: none !important;
+    color: inherit !important;
+    padding: 0 !important;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0 0.25em;
+}
+
+.file-tree-node.active>.file-node-content,
+.outline-item.active {
+    background-color: var(--active-file-bg-color);
+    border-left: 3px solid var(--active-file-border-color);
+    color: var(--accent-text-color);
+}
+
+.outline-item:hover,
+.file-list-item:hover,
+.ty-side-sort-btn.active,
+.outline-expander:hover {
+    background-color: var(--item-hover-bg-color);
+}
+
+.sidebar-tabs {
+    border-bottom: none;
+}
+
+#typora-quick-open {
+    background-color: var(--window-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.typora-quick-open-item {
+    background-color: inherit;
+    color: inherit;
+}
+
+.typora-quick-open-item.active,
+.typora-quick-open-item:hover {
+    background-color: var(--active-file-bg-color);
+    color: var(--accent-text-color);
+}
+
+/* Images */
+#write img {
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: block;
+    margin: 1.5em auto;
+    max-width: 100%;
+}
+
+#write img:hover {
+    transform: scale(1.01);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.md-image>.md-meta {
+    color: var(--control-text-color);
+    font-size: 0.85em;
+    text-align: center;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Table of Contents */
+.md-toc {
+    margin-top: 24px;
+    padding: 24px;
+    background-color: var(--quote-bg-color);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.md-toc-content {
+    color: var(--control-text-color);
+}
+
+.md-toc-item {
+    transition: color 0.2s;
+}
+
+.md-toc-item:hover {
+    color: var(--accent-text-color);
+    text-decoration: underline;
+}
+
+/* Markdown Tags */
+.md-tag {
+    color: var(--accent-text-color);
+    background-color: rgba(217, 119, 87, 0.10);
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    opacity: 1;
+}
+
+/* YAML Front Matter (Meta Block) */
+#write pre.md-meta-block {
+    padding: 1.2rem;
+    font-size: 85%;
+    line-height: 1.5;
+    background-color: var(--quote-bg-color);
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--control-text-color);
+    margin-top: 0 !important;
+    font-family: var(--font-mono);
+}
+
+/* Code language indicator */
+.md-lang {
+    color: var(--code-muted-color);
+}
+
+/* Source code tooltip */
+.code-tooltip {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--window-bg-color);
+}
+
+/* Print Media Layout */
+@media print {
+    html {
+        font-size: 13px;
+    }
+    table,
+    pre,
+    blockquote,
+    figure,
+    .md-alert,
+    #write img {
+        page-break-inside: avoid;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        page-break-after: avoid;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+    pre {
+        word-wrap: break-word;
+    }
+    #write img,
+    table,
+    .md-fences {
+        box-shadow: none;
+    }
+}
+
+/* Header Anchors */
+h1:hover a.anchor,
+h2:hover a.anchor,
+h3:hover a.anchor,
+h4:hover a.anchor,
+h5:hover a.anchor,
+h6:hover a.anchor {
+    text-decoration: none;
+}
+
+/* Header Focus styles */
+#write>h3.md-focus:before { left: -1.5rem; top: .3rem; }
+#write>h4.md-focus:before { left: -1.5rem; top: .25rem; }
+#write>h5.md-focus:before { left: -1.5rem; top: .25rem; }
+#write>h6.md-focus:before { left: -1.5rem; top: .25rem; }
+
+/* Focus Mode */
+.on-focus-mode .md-end-block:not(.md-focus):not(.md-focus-container) *,
+.on-focus-mode li[cid]:not(.md-focus):not(.md-focus-container) {
+    color: var(--control-text-color) !important;
+    transition: color 0.2s ease-out;
+}
+
+.on-focus-mode .md-fences.md-focus .CodeMirror-code > *:not(.CodeMirror-activeline) *,
+.on-focus-mode .CodeMirror.cm-s-inner:not(.CodeMirror-focused) *,
+.on-focus-mode #typora-source .CodeMirror-code > *:not(.CodeMirror-activeline) * {
+    color: var(--control-text-color) !important;
+}
+
+.on-focus-mode .md-focus,
+.on-focus-mode .md-focus-container {
+    color: var(--text-color);
+}
+
+.on-focus-mode #write img,
+.on-focus-mode #write svg {
+    opacity: 0.45;
+    transition: opacity 0.2s ease-out, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.on-focus-mode #write .md-focus img,
+.on-focus-mode #write .md-focus svg {
+    opacity: 1;
+}
+
+.on-focus-mode blockquote {
+    border-left-color: rgba(217, 119, 87, 0.25);
+}
+
+/* Typora Menus & Settings UI */
+header, .context-menu, .megamenu-content, footer {
+    font-family: var(--font-ui);
+}
+
+.file-node-content:hover .file-node-icon,
+.file-node-content:hover .file-node-open-state {
+    visibility: visible;
+}
+
+.mac-seamless-mode #typora-sidebar {
+    background-color: var(--side-bar-bg-color);
+}
+
+#write {
+    caret-color: var(--accent-color);
+}
+
+#md-notification .btn {
+    border: 0;
+}
+
+.dropdown-menu {
+    background-color: var(--window-bg-color);
+    border-color: var(--border-color);
+}
+
+.dropdown-menu .divider {
+    border-color: var(--border-color);
+    opacity: 0.6;
+}
+
+.ty-preferences .window-content {
+    background-color: var(--bg-color);
+}
+
+.ty-preferences .nav-group-item.active {
+    color: #ffffff;
+    background: var(--accent-color);
+}
+
+.menu-item-container a.menu-style-btn {
+    background-color: var(--window-bg-color);
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0));
+}
+
+/* Fix first elements spacing */
+#write > ul:first-child,
+#write > ol:first-child,
+#write > p:first-child {
+    margin-top: 30px;
+}
+
+#write > h1:first-child,
+#write > h2:first-child,
+#write > h3:first-child,
+#write > h4:first-child,
+#write > h5:first-child,
+#write > h6:first-child {
+    margin-top: 0.6em;
+}
+
+#write li p {
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+#write li p.first {
+    display: inline-block;
+    margin-top: 0;
+}
+
+/* -------------------------------------
+ *  GitHub-style Alerts (> [!NOTE] etc.)
+ * ------------------------------------- */
+.md-alert {
+    border-left: 4px solid var(--border-color);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8em 1.2em;
+    margin: 1.5em 0;
+    background-color: var(--quote-bg-color);
+}
+
+.md-alert:has(.md-alert-text-note) {
+    border-left-color: #4493f8;
+    background-color: rgba(68, 147, 248, 0.08);
+}
+
+.md-alert:has(.md-alert-text-tip) {
+    border-left-color: #3fb950;
+    background-color: rgba(63, 185, 80, 0.08);
+}
+
+.md-alert:has(.md-alert-text-important) {
+    border-left-color: #ab7df8;
+    background-color: rgba(171, 125, 248, 0.08);
+}
+
+.md-alert:has(.md-alert-text-warning) {
+    border-left-color: #d29922;
+    background-color: rgba(210, 153, 34, 0.08);
+}
+
+.md-alert:has(.md-alert-text-caution) {
+    border-left-color: #f85149;
+    background-color: rgba(248, 81, 73, 0.08);
+}
+
+.md-alert-text-note,
+.md-alert-text-tip,
+.md-alert-text-important,
+.md-alert-text-warning,
+.md-alert-text-caution {
+    font-weight: 600;
+}
+
+.md-alert-text-note      { color: #4493f8; }
+.md-alert-text-tip       { color: #3fb950; }
+.md-alert-text-important { color: #ab7df8; }
+.md-alert-text-warning   { color: #d29922; }
+.md-alert-text-caution   { color: #f85149; }
+
+/* -------------------------------------
+ *  Editing Details
+ * ------------------------------------- */
+.cm-s-inner .CodeMirror-selected,
+.md-fences .CodeMirror-selected {
+    background: var(--select-text-bg-color) !important;
+}
+
+#md-searchpanel {
+    background-color: var(--window-bg-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+#md-searchpanel input {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+#md-searchpanel .searchpanel-search-option-btn.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #ffffff;
+}
+
+sup.md-footnote {
+    background-color: var(--inline-code-bg-color);
+    color: var(--accent-text-color);
+    border-radius: 8px;
+    padding: 0 4px;
+}
+
+.md-def-name,
+.md-def-content {
+    color: var(--quote-text-color);
+}
+
+.footnote-line {
+    border-top: 1px solid var(--border-color);
+}
+
+#write del,
+#write s {
+    color: var(--control-text-color);
+    text-decoration-color: var(--control-text-color);
+}
+
+#write u,
+#write ins {
+    text-decoration-color: var(--accent-color);
+    text-underline-offset: 2px;
+}
+
+.md-diagram-panel {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #faf9f5;
+}
+
+.md-diagram-panel-error {
+    color: #f85149;
+}
+
+.md-meta,
+.md-before,
+.md-after {
+    color: var(--control-text-color);
+}
+
+/* -------------------------------------
+ *  Typora UI: Start Screen, Dialogs, Sidebar Extras, Tooltips
+ * ------------------------------------- */
+.megamenu-menu,
+#top-titlebar {
+    background-color: var(--side-bar-bg-color);
+    color: var(--text-color);
+}
+
+.megamenu-menu-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.megamenu-content,
+.megamenu-opened header {
+    background: var(--bg-color);
+}
+
+.megamenu-menu-list li a:hover,
+.megamenu-menu-list li a.active {
+    background-color: var(--item-hover-bg-color);
+    color: var(--accent-text-color);
+}
+
+.megamenu-menu-panel h1,
+.megamenu-menu-panel h2 {
+    font-family: var(--font-heading);
+    color: var(--text-color);
+}
+
+.megamenu-menu-panel input[type="text"] {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+.megamenu-menu-panel .btn,
+.long-btn {
+    background-color: var(--window-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+}
+
+.long-btn:hover,
+.megamenu-menu-panel .btn:hover {
+    background-color: #2c2c2a;
+}
+
+#recent-file-panel tbody tr:nth-child(2n-1) {
+    background-color: var(--window-bg-color);
+}
+
+.modal-content {
+    background-color: var(--window-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.modal-header,
+.modal-footer {
+    border-color: var(--border-color);
+}
+
+.modal-backdrop,
+.modal-backdrop.in {
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.modal-content input {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-color);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #ffffff;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #e08862;
+    border-color: #e08862;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: var(--font-ui);
+}
+
+.sidebar-footer {
+    background-color: var(--side-bar-bg-color);
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-footer-item:hover,
+.footer-item:hover {
+    background-color: var(--item-hover-bg-color);
+}
+
+.file-list-item-summary,
+.file-list-item-parent-loc,
+.file-list-item-time {
+    color: var(--control-text-color);
+}
+
+.outline-expander:before {
+    content: "\f0da";
+    font-family: FontAwesome;
+    font-size: 14px;
+    top: 1px;
+}
+
+.outline-expander:hover:before,
+.outline-item-open > .outline-item > .outline-expander:before {
+    content: "\f0d7";
+}
+
+#ty-tooltip {
+    background-color: #121212;
+    color: #f8f8f6;
+    border-radius: 4px;
+}
+
+.md-hover-tip .md-arrow:after {
+    background: #121212;
+}
+
+/* Table editing toolbar */
+.ty-table-edit {
+    background-color: var(--window-bg-color);
+    border-top: 1px solid var(--border-color);
+}
+
+/* Footer word-count & source-view toggle active states */
+.ty-show-word-count #footer-word-count,
+.typora-sourceview-on #toggle-sourceview-btn {
+    background: var(--item-hover-bg-color);
+    border-radius: 4px;
+}
+
+/* Editing-time meta tokens: heading {#custom-id} attrs & HTML comments */
+.md-attr {
+    color: var(--control-text-color);
+}
+
+.md-comment {
+    color: var(--code-muted-color);
+    opacity: 0.8;
+    font-family: var(--font-mono);
+}
