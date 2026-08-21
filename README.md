@@ -5,11 +5,12 @@
 [![License](https://img.shields.io/badge/License-MIT-d97757)](./LICENSE)
 [![LINUX DO](https://img.shields.io/badge/LINUX%20DO-社区-f5a623?logo=discourse&logoColor=white)](https://linux.do)
 
-一对以 **claude.ai 官网设计语言**为蓝本的 Typora 主题:暖白纸感的浅色 `clay` 与暖灰深底的深色 `clay-dark`。配色对齐官网实测色板(陶土橙 Clay `#d97757` + 暖灰中性色),排版为衬线标题 + 无衬线正文,所有功能区块明暗**结构完全对称**(180 对规则逐条配对、零单边差异)。
+一对以 **claude.ai 官网设计语言**为蓝本的 Typora 主题:暖白纸感的浅色 `clay` 与暖灰深底的深色 `clay-dark`。配色对齐官网实测色板(陶土橙 Clay `#d97757` + 暖灰中性色),标题与正文统一走**随主题打包的霞鹜文楷 LXGW WenKai**,所有功能区块明暗**结构完全对称**(184 对规则逐条配对、零单边差异)。
 
 - 适配环境:**Typora 1.13.4 / Windows**(1.5+ 版本的语法块均有覆盖;含 macOS seamless 兼容规则)
-- 零网络依赖:不引用任何在线字体,离线 / 弱网 / 大陆网络环境下无渲染阻塞
-- 中英混排优化:标题走宋体系衬线回退、正文走苹方 / 雅黑回退、等宽含更纱黑体回退
+- **内置中文字体**:附带霞鹜文楷 Regular / Medium / Mono 三款 woff2,明暗两版一致,无需另行安装字体
+- 零网络依赖:字体为本地自托管,不发起任何在线请求,离线 / 弱网 / 大陆网络环境下无渲染阻塞
+- 中英混排优化:文楷统一覆盖中英文与标点;未命中时按宋体系 / 苹方 / 雅黑 / 更纱黑体逐级回退
 
 ---
 
@@ -24,6 +25,8 @@
 ![Clay 深色预览](screenshots/clay-dark.png)
 
 > 上图为主题渲染效果预览;实际以 Typora 中体验为准(建议配合「一体化」窗口样式)。
+>
+> 注:预览图摄于内置霞鹜文楷之前,字体观感请以实际安装后为准。
 
 ---
 
@@ -31,14 +34,15 @@
 
 ### 文件构成
 
-| 文件 | 说明 |
+| 文件 / 目录 | 说明 |
 |---|---|
-| `clay.css` | 浅色主题(主文件,单文件自包含) |
+| `clay.css` | 浅色主题 |
 | `clay-dark.css` | 深色主题(与浅色逐区块对称) |
+| `clay/` | 字体目录:霞鹜文楷 3 款 woff2 + `OFL.txt`。**两个 css 都依赖它**,需一起复制 |
 
 ### 主题目录
 
-把两个 `.css` 复制到 Typora 的主题目录:
+把两个 `.css` **和 `clay/` 目录**一起复制到 Typora 的主题目录:
 
 | 平台 | 路径 |
 |---|---|
@@ -47,6 +51,22 @@
 | Linux | `~/.config/Typora/themes/` |
 
 > 在 Typora → 文件 → 偏好设置 → 外观 → **打开主题文件夹**,可直接跳到该目录。
+
+复制完成后,主题目录下应该是这样:
+
+```
+themes/
+├── clay.css
+├── clay-dark.css
+└── clay/
+    ├── LXGWWenKai-Regular.woff2
+    ├── LXGWWenKai-Medium.woff2
+    ├── LXGWWenKaiMono-Regular.woff2
+    └── OFL.txt
+```
+
+> [!IMPORTANT]
+> `clay/` 必须与两个 `.css` **同级**——css 里的 `@font-face` 按 `clay/xxx.woff2` 相对寻址。只复制 css 不复制目录,主题依然能用,但会静默回退到系统字体,失去文楷观感。
 
 ### 启用 / 更新
 
@@ -75,20 +95,24 @@
 | 淡橙底上的文本(侧栏激活 / 标签 / 脚注) | `#9a4a28`(5.35:1) | `#d97757` |
 | 引用底 / 侧栏底 | `#efeeeb` | `#262625` / `#171716` |
 
-### 字体栈(全部本地回退,无网络请求)
+### 字体栈(内置霞鹜文楷,全部本地,无网络请求)
+
+栈首是随主题打包的 **霞鹜文楷 LXGW WenKai**(`clay/` 内的 woff2),明暗两版完全一致:
 
 | 用途 | 栈 |
 |---|---|
-| 标题 `--font-heading` | Anthropic Serif → Söhne Serif → ui-serif → Georgia → 宋体 / 思源宋体 |
-| 正文 `--font-body` | Anthropic Sans → Inter → Söhne → Segoe UI → 苹方 / 微软雅黑 |
-| 等宽 `--font-mono` | Anthropic Mono → Fira Code → JetBrains Mono → Consolas → 更纱黑体 Mono SC |
-| 界面 `--font-ui` | 同正文系,用于菜单 / 对话框 / 表单控件 |
+| 标题 `--font-heading` | **LXGW WenKai** → Anthropic Serif → Söhne Serif → ui-serif → Georgia → 宋体 / 思源宋体 |
+| 正文 `--font-body` | **LXGW WenKai** → Anthropic Sans → Inter → Söhne → Segoe UI → 苹方 / 微软雅黑 |
+| 等宽 `--font-mono` | Anthropic Mono → Fira Code → JetBrains Mono → Consolas → **LXGW WenKai Mono** → 更纱黑体 Mono SC |
+| 界面 `--font-ui` | 同正文系(不含文楷),用于菜单 / 对话框 / 表单控件 |
 
-装了 Inter / Fira Code / 更纱黑体效果更佳;一个都没装也能正常回退到系统字体。
+字重按真实字形绑定:`Regular` 绑 `100–450`、`Medium` 绑 `500–900`,所以**加粗与标题用的是真 Medium 字形,而非浏览器伪粗体**,不糊边。等宽栈把文楷 Mono 放在编程字体之后——装了 Fira Code / JetBrains Mono 的机器仍优先用它们渲染英文代码,文楷 Mono 负责兜底代码块里的中文,保证对齐代码网格。
+
+> 不想要内置字体:把 `--font-heading` / `--font-body` 栈首的 `"LXGW WenKai", ` 删掉即可,其余回退栈原样可用。
 
 ### 版式
 
-- 正文列宽 820px 居中(≥1400px 宽屏放宽到 880px;窄窗 ≤768px 收边距),行高 1.75,字距 0.01em
+- 正文列宽 820px 居中(≥1400px 宽屏放宽到 880px;窄窗 ≤768px 收边距),行高 1.8,字距 0.02em(配合文楷偏宽的字面,中文阅读更松弛)
 - 数字启用等宽表格数字(`tabular-nums`),表格 / 数据列天然对齐
 - 文档首元素顶距收窄(以标题开头时不留大空白)
 
@@ -134,7 +158,7 @@ Clay 4px 左条 + 暖灰底 + 右侧圆角,**直立不斜体**;嵌套引用右�
 - **Mermaid 图表**:圆角边框面板;深色主题下保持浅底面板(图表默认配色按浅底设计,刻意不翻转)
 - **脚注**:上标做成暖底小徽章;脚注区顶部分隔线
 - `~~删除线~~` 弱化灰;`<u>` / `<ins>` 陶土色下划线;`#标签` 暖底圆角小片
-- 图片:块级居中 + 圆角 + 浮起阴影,悬停轻微放大;`[TOC]` 目录卡片化
+- 图片:块级居中 + 圆角 + 浮起阴影,悬停轻微放大;上下间距 0.9em,**紧跟标题的图片再收窄到 0.4em**(配图不再与标题脱节);`[TOC]` 目录卡片化
 
 ---
 
@@ -177,7 +201,7 @@ Clay 4px 左条 + 暖灰底 + 右侧圆角,**直立不斜体**;嵌套引用右�
 | 想改什么 | 动哪个变量 |
 |---|---|
 | 换强调色 | `--accent-color`(装饰)+ `--accent-text-color`(文本级,注意对比度) |
-| 换字体 | `--font-heading` / `--font-body` / `--font-mono` |
+| 换字体 / 关掉内置文楷 | `--font-heading` / `--font-body` / `--font-mono`(删掉栈首的 `"LXGW WenKai", ` 即回到系统字体) |
 | 列宽 | `#write { max-width }`(两处:默认 820 与宽屏 880)|
 | 代码高亮配色 | `--code-keyword/string/number/symbol/muted-color` |
 | 表格 / 引用底色 | `--table-*` / `--quote-*` |
@@ -189,7 +213,7 @@ Clay 4px 左条 + 暖灰底 + 右侧圆角,**直立不斜体**;嵌套引用右�
 
 ## 八、质量基线
 
-开发中经过五轮审查:静态分析(括号 / 变量 / 选择器配对)、真实浏览器渲染(Playwright 计算样式 + 截图)、**与 Typora 真实 base.css 同层加载的级联回归测试**、WCAG 对比度实算、对抗式代理复查。当前状态:两文件 184/184 括号平衡、180 对规则零单边零属性差、零悬空变量。
+开发中经过五轮审查:静态分析(括号 / 变量 / 选择器配对)、真实浏览器渲染(Playwright 计算样式 + 截图)、**与 Typora 真实 base.css 同层加载的级联回归测试**、WCAG 对比度实算、对抗式代理复查。当前状态:两文件 188/188 括号平衡、184 对规则零单边零属性差、零悬空变量。
 
 日常自检:随手用一篇含标题 / 列表 / 任务列表 / 表格 / 代码块 / 引用 / 警告块 / 公式的 Markdown,在明暗两主题下逐项对照(重点看:源码模式配色、对话框无蓝色残留、深色窗框、复选框首行对齐、专注模式压暗方向)。
 
@@ -205,10 +229,12 @@ Clay 4px 左条 + 暖灰底 + 右侧圆角,**直立不斜体**;嵌套引用右�
 
 ## License
 
-[MIT](./LICENSE)
+主题样式(`clay.css` / `clay-dark.css` / 文档):[MIT](./LICENSE)
+
+**内置字体单独授权**:`clay/` 下的霞鹜文楷 LXGW WenKai(Regular / Medium / Mono)版权归 [LXGW](https://github.com/lxgw/LxgwWenKai),以 **SIL Open Font License 1.1** 授权,完整条款见 [`clay/OFL.txt`](./clay/OFL.txt)。本仓库仅以 woff2 形式随主题分发、供 `@font-face` 渲染,未作为可安装的桌面字体提供,符合该字体 OFL 中的附加许可条款。字体本身不适用 MIT。霞鹜文楷衍生自 [Klee One](https://github.com/fontworks-fonts/Klee)(FONTWORKS Inc.,同为 OFL 1.1)。
 
 本主题在视觉上参考了 [claude.ai](https://claude.ai) 的公开设计语言(配色 / 版式),与 Anthropic 无隶属或背书关系。"Claude" 为 Anthropic 的商标,此处仅作事实性引用。
 
 ---
 
-*主题文件:`clay.css` 与 `clay-dark.css`(放入 Typora 主题目录) · 基于 Typora 1.13.4 验证 · 2026-07*
+*主题文件:`clay.css`、`clay-dark.css` 与 `clay/` 字体目录(三者一并放入 Typora 主题目录) · 基于 Typora 1.13.4 验证 · 2026-08*

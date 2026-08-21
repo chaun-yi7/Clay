@@ -1,5 +1,31 @@
 /* Clay — Typora Theme (Light) · inspired by the claude.ai design language */
 
+/* -------------------------------------
+ *  Local Fonts — 霞鹜文楷 LXGW WenKai (self-hosted woff2, offline-safe)
+ *  Files live in ./clay/ next to this stylesheet.
+ * ------------------------------------- */
+@font-face {
+    font-family: "LXGW WenKai";
+    src: url("clay/LXGWWenKai-Regular.woff2") format("woff2");
+    font-weight: 100 450;   /* body / normal text */
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "LXGW WenKai";
+    src: url("clay/LXGWWenKai-Medium.woff2") format("woff2");
+    font-weight: 500 900;   /* headings & bold — real Medium, no faux-bold */
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "LXGW WenKai Mono";
+    src: url("clay/LXGWWenKaiMono-Regular.woff2") format("woff2");
+    font-weight: normal;    /* CJK monospace for code blocks — aligns to the code grid */
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
     /* Color Palette — aligned to measured claude.ai tokens */
     --side-bar-bg-color: #efeeeb;
@@ -50,10 +76,10 @@
     --blur-text-color: #7b7974;
 
     /* Typography */
-    --font-heading: "Anthropic Serif", "Söhne Serif", ui-serif, Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
-    --font-body: "Anthropic Sans", "Inter", "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+    --font-heading: "LXGW WenKai", "Anthropic Serif", "Söhne Serif", ui-serif, Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+    --font-body: "LXGW WenKai", "Anthropic Sans", "Inter", "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
     --font-ui: "Anthropic Sans", "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
-    --font-mono: "Anthropic Mono", "Fira Code", "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "Sarasa Mono SC", "Cascadia Code", monospace;
+    --font-mono: "Anthropic Mono", "Fira Code", "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "LXGW WenKai Mono", "LXGW WenKai", "Sarasa Mono SC", "Cascadia Code", monospace;
 }
 
 html {
@@ -67,8 +93,8 @@ body {
     font-family: var(--font-body);
     color: var(--text-color);
     background-color: var(--bg-color);
-    line-height: 1.75;
-    letter-spacing: 0.01em;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
     font-variant-numeric: lining-nums tabular-nums;
 }
 
@@ -646,8 +672,15 @@ tt {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: block;
-    margin: 1.5em auto;
+    margin: 0.9em auto;
     max-width: 100%;
+}
+
+/* Tighten the gap when an image directly follows a heading */
+#write :is(h1, h2, h3, h4, h5, h6) + p:has(> img),
+#write :is(h1, h2, h3, h4, h5, h6) + p:has(> .md-image),
+#write :is(h1, h2, h3, h4, h5, h6) + figure {
+    margin-top: 0.4em;
 }
 
 #write img:hover {
