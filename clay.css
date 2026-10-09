@@ -1021,12 +1021,13 @@ sup.md-footnote {
     text-underline-offset: 2px;
 }
 
-/* Bold: WenKai Medium sits close to Regular at body size — add a hairline
-   same-color stroke so **bold** reads as a distinct weight, not a hint */
+/* Bold: weight 700 binds to the true WenKai Medium face via the @font-face
+   ranges — the cut's own weight step reads clearly. Deliberately no synthetic
+   stroke on top: a same-colour stroke bloats the strokes and muddies the
+   counters, which reads as over-inked and "not normal". */
 #write b,
 #write strong {
     font-weight: 700;
-    -webkit-text-stroke: 0.25px currentColor;
 }
 
 .md-diagram-panel {
