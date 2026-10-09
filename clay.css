@@ -75,6 +75,9 @@
     --window-border: 1px solid #dededc;
     --blur-text-color: #7b7974;
 
+    /* Mermaid: Typora reads this at render time (default | dark | forest | neutral | base) */
+    --mermaid-theme: default;
+
     /* Typography */
     --font-heading: "LXGW WenKai", "Anthropic Serif", "Söhne Serif", ui-serif, Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
     --font-body: "LXGW WenKai", "Anthropic Sans", "Inter", "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
@@ -1018,6 +1021,14 @@ sup.md-footnote {
     text-underline-offset: 2px;
 }
 
+/* Bold: WenKai Medium sits close to Regular at body size — add a hairline
+   same-color stroke so **bold** reads as a distinct weight, not a hint */
+#write b,
+#write strong {
+    font-weight: 700;
+    -webkit-text-stroke: 0.25px currentColor;
+}
+
 .md-diagram-panel {
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -1043,8 +1054,42 @@ sup.md-footnote {
     color: var(--text-color);
 }
 
+/* Window buttons: base Typora gives the caption buttons 28px boxes inside
+   the 24px title bar, so they paint their inherited background 4px past
+   its lower edge — pin them to the bar height so the strip stays flush,
+   and theme the hover so dark mode never flashes light grey */
+#top-titlebar #w-min,
+#top-titlebar #w-max,
+#top-titlebar #w-restore,
+#top-titlebar #w-close {
+    height: 24px;
+}
+
+#top-titlebar .toolbar-icon.btn.hover,
+#top-titlebar .toolbar-icon.btn:hover {
+    background-color: #e6e5e0;
+    color: var(--text-color);
+}
+
 .megamenu-menu-header {
     border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+}
+
+/* Start page: base paints the menu title / hover in hard-coded #fff (made
+   for its own dark strip) — retint to theme tokens so it reads on our bg */
+.megamenu-menu-header #megamenu-menu-header-title {
+    color: var(--text-color);
+}
+
+.megamenu-menu-header:focus,
+.megamenu-menu-header:hover {
+    color: var(--text-color);
+}
+
+#megamenu-back-btn {
+    color: var(--control-text-color);
+    border-color: var(--border-color);
 }
 
 .megamenu-content,
