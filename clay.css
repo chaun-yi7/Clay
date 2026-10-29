@@ -75,14 +75,30 @@
     --window-border: 1px solid #dededc;
     --blur-text-color: #7b7974;
 
-    /* Mermaid: Typora reads this at render time (default | dark | forest | neutral | base) */
+    /* Mermaid: Typora reads this at render time (default | dark | forest | neutral | base).
+       Its exporter locates the declaration by plain-text search, so keep this
+       the only mention of the property name in the file. */
     --mermaid-theme: default;
+
+    /* Diagrams: ivory panel; Mermaid restyled to the Anthropic engineering-blog look */
+    --diagram-bg-color: #faf9f5;
+    --panel-border-color: var(--border-color);
+    --mermaid-node-color: #dde8f3;
+    --mermaid-node-border-color: #5f93c8;
+    --mermaid-text-color: var(--text-color);
+    --mermaid-line-color: #3d3d3a;
+    --mermaid-label-color: #5e5d59;
+    --mermaid-cluster-color: #f0eee6;
+    --mermaid-cluster-border-color: #d1cfc5;
 
     /* Typography */
     --font-heading: "LXGW WenKai", "Anthropic Serif", "Söhne Serif", ui-serif, Georgia, "Times New Roman", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", serif;
     --font-body: "LXGW WenKai", "Anthropic Sans", "Inter", "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
     --font-ui: "Anthropic Sans", "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
     --font-mono: "Anthropic Mono", "Fira Code", "JetBrains Mono", "SF Mono", Menlo, Monaco, Consolas, "LXGW WenKai Mono", "LXGW WenKai", "Sarasa Mono SC", "Cascadia Code", monospace;
+
+    /* Bold: hairline stroke over WenKai Medium (0 = plain Medium face) */
+    --strong-stroke-width: 0.009em;
 }
 
 html {
@@ -308,6 +324,16 @@ table tr:last-child td {
 
 table tr:hover td {
     background-color: var(--table-hover-color);
+}
+
+/* A cell holding nothing but one inline code span (URL, path, identifier)
+   would demand its full length as the column minimum and push the table past
+   the text column. Capping the cell's intrinsic width lets that token wrap
+   only once the table is short of room; short tokens and ordinary words never
+   split. Keyed to Typora's editor DOM, where every inline run is its own
+   [md-inline] span, so cells that mix text and code are left alone. */
+table td:has(> .td-span > [md-inline="code"]:only-child) {
+    max-width: 15em;
 }
 
 /* Inline Code */
@@ -1021,23 +1047,105 @@ sup.md-footnote {
     text-underline-offset: 2px;
 }
 
-/* Bold: weight 700 binds to the true WenKai Medium face via the @font-face
-   ranges — the cut's own weight step reads clearly. Deliberately no synthetic
-   stroke on top: a same-colour stroke bloats the strokes and muddies the
-   counters, which reads as over-inked and "not normal". */
+/* Bold: weight 700 binds to the true WenKai Medium face, but WenKai has no
+   real Bold and its Medium carries only ~18% more ink than Regular, so bold
+   reads as a hint. A hairline same-colour stroke (em-based, so it scales with
+   headings and small text) lifts that to ~29% in both themes — well short of
+   the 0.25px stroke that over-inked; --strong-stroke-width: 0 restores plain
+   Medium. */
 #write b,
 #write strong {
     font-weight: 700;
+    -webkit-text-stroke: var(--strong-stroke-width) currentColor;
 }
 
 .md-diagram-panel {
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: var(--diagram-bg-color);
 }
 
 .md-diagram-panel-error {
     color: #cf222e;
+}
+
+/* Mermaid: Anthropic engineering-blog look layered over the mermaid theme —
+   light-blue rounded nodes, hairline edges, plain labels on the ivory panel.
+   Scoped per diagram type; user style / classDef / linkStyle are inline or
+   !important, so they still win. */
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .node :is(rect, circle, ellipse, polygon, path),
+#write .md-diagram-panel svg[aria-roledescription="class"] .node :is(rect, path),
+#write .md-diagram-panel svg[aria-roledescription="stateDiagram"] .statediagram-state rect.label-container,
+#write .md-diagram-panel svg[aria-roledescription="sequence"] :is(rect.actor, .actor-man circle) {
+    fill: var(--mermaid-node-color);
+    stroke: var(--mermaid-node-border-color);
+    stroke-width: 1px;
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .node rect.label-container:not([rx]),
+#write .md-diagram-panel svg[aria-roledescription="sequence"] rect.actor {
+    rx: 6px;
+    ry: 6px;
+}
+
+/* Mermaid's (rounded) shape: keep it visibly rounder than the softened square */
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .node rect.label-container[rx] {
+    rx: 14px;
+    ry: 14px;
+}
+
+#write .md-diagram-panel svg:is([aria-roledescription="flowchart-v2"], [aria-roledescription="class"], [aria-roledescription="stateDiagram"]) .nodeLabel {
+    color: var(--mermaid-text-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="sequence"] :is(text.actor, text.actor > tspan, .noteText, .noteText > tspan) {
+    fill: var(--mermaid-text-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .flowchart-link {
+    stroke: var(--mermaid-line-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .marker {
+    fill: var(--mermaid-line-color);
+    stroke: var(--mermaid-line-color);
+}
+
+#write .md-diagram-panel svg:is([aria-roledescription="flowchart-v2"], [aria-roledescription="class"], [aria-roledescription="stateDiagram"]) :is(span.edgeLabel, .edgeLabel p, .labelBkg) {
+    background-color: var(--diagram-bg-color);
+    color: var(--mermaid-label-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .cluster rect,
+#write .md-diagram-panel svg[aria-roledescription="stateDiagram"] .statediagram-cluster rect,
+#write .md-diagram-panel svg[aria-roledescription="sequence"] :is(rect.note, .labelBox, rect[class^="activation"]) {
+    fill: var(--mermaid-cluster-color);
+    stroke: var(--mermaid-cluster-border-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .cluster rect {
+    rx: 8px;
+    ry: 8px;
+}
+
+#write .md-diagram-panel svg[aria-roledescription="stateDiagram"] .statediagram-cluster rect.inner {
+    fill: var(--diagram-bg-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="flowchart-v2"] .cluster-label :is(span, p) {
+    color: var(--mermaid-label-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="sequence"] :is(.labelText, .labelText > tspan, .loopText, .loopText > tspan) {
+    fill: var(--mermaid-label-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="sequence"] :is(.actor-line, .loopLine) {
+    stroke: var(--mermaid-cluster-border-color);
+}
+
+#write .md-diagram-panel svg[aria-roledescription="sequence"] .actor-man line {
+    stroke: var(--mermaid-node-border-color);
 }
 
 .md-meta,
@@ -1055,15 +1163,44 @@ sup.md-footnote {
     color: var(--text-color);
 }
 
-/* Window buttons: base Typora gives the caption buttons 28px boxes inside
-   the 24px title bar, so they paint their inherited background 4px past
-   its lower edge — pin them to the bar height so the strip stays flush,
-   and theme the hover so dark mode never flashes light grey */
+/* Title bar: base Typora makes the caption buttons 28px tall, and the floats
+   holding them inherit the body line-height (1.8 → a 28.8px line box), so
+   the bar colour spilled 4–5px below the 24px bar. Pin the right-hand strip,
+   the max group and every caption button to the bar, pull the long-press
+   flyout (full screen / pin) up so it still meets the max button, and let
+   the left-hand title area paint nothing of its own. Hover is themed so dark
+   mode never flashes light grey. */
+#top-titlebar #w-traffic-lights {
+    height: 24px;
+}
+
+#top-titlebar #w-max-group,
 #top-titlebar #w-min,
 #top-titlebar #w-max,
 #top-titlebar #w-restore,
-#top-titlebar #w-close {
+#top-titlebar #w-close,
+#top-titlebar #w-unpin {
     height: 24px;
+    vertical-align: top;
+}
+
+#top-titlebar #w-full {
+    top: 24px;
+    border-color: var(--border-color);
+}
+
+#top-titlebar #w-pin {
+    top: 51px;
+    border-color: var(--border-color);
+}
+
+#top-titlebar #w-unpin {
+    background-color: #e6e5e0;
+}
+
+#top-titlebar #w-titlebar-left,
+#top-titlebar #w-titlebar-left * {
+    background-color: transparent;
 }
 
 #top-titlebar .toolbar-icon.btn.hover,
